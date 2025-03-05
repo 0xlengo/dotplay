@@ -28,30 +28,30 @@ export default function PlayPage() {
   const hasPreviousGames = currentPage > 1;
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-gradient-to-b from-[#E6007A] to-[#000000]">
+    <div className="flex min-h-screen w-full flex-col items-center bg-gradient-to-b from-[#E6007A] to-[#000000]">
       {/* Contenido principal con scroll */}
-      <div className="flex-1 overflow-y-auto p-4">
-        <h1 className="text-4xl font-bold text-white text-center mb-6">
-          Gaming en Polkadot 
+      <div className="flex w-full max-w-5xl flex-1 flex-col p-4 pt-12">
+        <h1 className="text-5xl font-bold text-white text-center mb-12">
+          Gaming en Polkadot {currentPage === 2 ? '(5-8)' : '(1-4)'}
         </h1>
         
         {/* Sección de juegos */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-1 flex-col gap-6">
           {currentGames.map((game) => (
             <Link
               key={game.id}
               href={`/play/${game.id}`}
-              className="flex h-[18vh] w-full rounded-2xl bg-black/20 overflow-hidden transition-transform active:scale-95 hover:bg-black/30"
+              className="flex h-[18vh] w-full rounded-3xl bg-black/20 overflow-hidden transition-transform active:scale-95 hover:bg-black/30"
             >
               {/* Lado izquierdo - Imagen */}
               <div className="flex w-1/3 items-center justify-center bg-white/5">
-                <div className="h-20 w-20 rounded-full bg-white/10"></div>
+                <div className="h-24 w-24 rounded-full bg-white/10"></div>
               </div>
               
               {/* Lado derecho - Descripción */}
-              <div className="flex flex-1 flex-col justify-center p-4">
-                <h3 className="mb-2 text-2xl font-bold text-white">{game.name}</h3>
-                <p className="text-lg text-white/80 line-clamp-2">
+              <div className="flex flex-1 flex-col justify-center p-6">
+                <h3 className="mb-3 text-3xl font-bold text-white">{game.name}</h3>
+                <p className="text-xl text-white/80 line-clamp-2">
                   {game.desc}
                 </p>
               </div>
@@ -61,41 +61,43 @@ export default function PlayPage() {
       </div>
 
       {/* Botones de navegación fijos en la parte inferior */}
-      <div className="p-4 border-t border-white/10">
-        <div className="flex flex-col gap-3">
-          <div className="flex gap-3">
-            <button
-              onClick={() => router.push('/')}
-              className="flex-1 rounded-2xl border-4 border-white py-6 text-center text-2xl font-semibold text-white transition-all hover:bg-white/10 active:scale-95"
-            >
-              Inicio
-            </button>
-            
-            {hasPreviousGames ? (
+      <div className="w-full border-t border-white/10">
+        <div className="mx-auto max-w-5xl p-4">
+          <div className="flex flex-col gap-3">
+            <div className="flex gap-3">
               <button
-                onClick={() => setCurrentPage(prev => prev - 1)}
-                className="flex-1 rounded-2xl border-4 border-white py-6 text-center text-2xl font-semibold text-white transition-all hover:bg-white/10 active:scale-95"
+                onClick={() => router.push('/')}
+                className="flex-1 rounded-3xl border-4 border-white py-8 text-center text-3xl font-semibold text-white transition-all hover:bg-white/10 active:scale-95"
               >
-                Volver
+                Inicio
               </button>
-            ) : hasMoreGames && (
+              
+              {hasPreviousGames ? (
+                <button
+                  onClick={() => setCurrentPage(prev => prev - 1)}
+                  className="flex-1 rounded-3xl border-4 border-white py-8 text-center text-3xl font-semibold text-white transition-all hover:bg-white/10 active:scale-95"
+                >
+                  Volver
+                </button>
+              ) : hasMoreGames && (
+                <button
+                  onClick={() => setCurrentPage(prev => prev + 1)}
+                  className="flex-1 rounded-3xl bg-white py-8 text-center text-3xl font-semibold text-[#E6007A] transition-all hover:bg-opacity-90 active:scale-95"
+                >
+                  Siguientes
+                </button>
+              )}
+            </div>
+            
+            {hasPreviousGames && hasMoreGames && (
               <button
                 onClick={() => setCurrentPage(prev => prev + 1)}
-                className="flex-1 rounded-2xl bg-white py-6 text-center text-2xl font-semibold text-[#E6007A] transition-all hover:bg-opacity-90 active:scale-95"
+                className="w-full rounded-3xl bg-white py-8 text-center text-3xl font-semibold text-[#E6007A] transition-all hover:bg-opacity-90 active:scale-95"
               >
                 Siguientes
               </button>
             )}
           </div>
-          
-          {hasPreviousGames && hasMoreGames && (
-            <button
-              onClick={() => setCurrentPage(prev => prev + 1)}
-              className="w-full rounded-2xl bg-white py-6 text-center text-2xl font-semibold text-[#E6007A] transition-all hover:bg-opacity-90 active:scale-95"
-            >
-              Siguientes
-            </button>
-          )}
         </div>
       </div>
     </div>
