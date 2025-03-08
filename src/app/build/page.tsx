@@ -1,9 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useInactivityTimer } from "@/hooks/useInactivityTimer";
 
 export default function BuildPage() {
   const router = useRouter();
+  
+  useInactivityTimer();
 
   return (
     <div className="flex min-h-screen w-full flex-col items-center bg-gradient-to-b from-[#E6007A] to-[#000000]">

@@ -1,20 +1,30 @@
 "use client";
 
 import Link from "next/link";
+
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useInactivityTimer } from "@/hooks/useInactivityTimer";
 
 export default function PlayPage() {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
   
+  useInactivityTimer();
+
   // Simulación de juegos - esto vendría de una API o base de datos
   const games = [
     { id: 1, name: "Pinkness Overdrive", desc: "Race through snowy mountains with a touch of pinkness.  Desktop browsers only" },
     { id: 2, name: "Pink Drop", desc: "Batalla épica de NFTs en la blockchain" },
     { id: 3, name: "Pink Mole", desc: "Colecciona y batalla con monstruos digitales" },
     { id: 4, name: "Pink Bullet", desc: "Defiende tu nodo en este juego de estrategia" },
-    { id: 5, name: "Nitro Nation", desc: "Construye tu mundo en el metaverso de Polkadot" },
+    { 
+      id: 5, 
+      name: "Nitro Nation", 
+      desc: "Race across the globe in Nitro Nation World Tour! Collect and drive some of the fastest cars in the world in this free to play drag racing mobile game.",
+      logo: "/nitro_nation.webp",
+      descImage: "/nitro_nation_desc.avif"
+    },
     { id: 6, name: "NFL Rivals", desc: "Corre y esquiva obstáculos en la blockchain" },
     { id: 7, name: "FIFA Rivals", desc: "Corre y esquiva obstáculos en la blockchain" },
     { id: 8, name: "Pudgy Party", desc: "Cuida y entrena mascotas digitales únicas" },
@@ -22,7 +32,6 @@ export default function PlayPage() {
     { id: 10, name: "Exiled Racers", desc: "Batallas estratégicas en tiempo real" },
     { id: 11, name: "Evrloot", desc: "Batallas estratégicas en tiempo real" },
     { id: 12, name: "Big Ballz of Bayun", desc: "Batallas estratégicas en tiempo real" }
-    
   ];
 
   // Obtener juegos para la página actual
@@ -48,14 +57,24 @@ export default function PlayPage() {
               href={`/play/${game.id}`}
               className="flex w-full rounded-3xl bg-black/20 overflow-hidden transition-transform active:scale-95 hover:bg-black/30"
             >
-              {/* Lado izquierdo - Imagen */}
-              <div className="flex aspect-square items-center justify-center bg-white/5">
-                <div className="h-16 w-16 rounded-full bg-white/10"></div>
+              {/* Lado izquierdo - Círculo o Imagen */}
+              <div className="flex aspect-square items-center justify-center bg-white/5 relative">
+                {game.descImage ? (
+                  <div className="h-16 w-16 rounded-full bg-white/10"></div>
+                ) : (
+                  <div className="h-16 w-16 rounded-full bg-white/10"></div>
+                )}
               </div>
               
-              {/* Lado derecho - Descripción */}
+              {/* Lado derecho - Logo o Título y Descripción */}
               <div className="flex flex-1 flex-col justify-center p-4">
-                <h3 className="mb-1 text-2xl font-bold text-white">{game.name}</h3>
+                {game.logo ? (
+                  <div className="h-8 w-80 relative mb-2">
+                    <div className="h-16 w-16 rounded-full bg-white/10"></div>
+                  </div>
+                ) : (
+                  <h3 className="mb-1 text-2xl font-bold text-white">{game.name}</h3>
+                )}
                 <p className="text-lg text-white/80 line-clamp-2">
                   {game.desc}
                 </p>

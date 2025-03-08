@@ -2,6 +2,8 @@
 
 import { use } from "react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useInactivityTimer } from "@/hooks/useInactivityTimer";
 
 interface Game {
   name: string;
@@ -40,14 +42,14 @@ function getGameData(id: string): Game | null {
     },
     "5": {
       name: "Nitro Nation",
-      desc: "Construye tu mundo en el metaverso de Polkadot",
-      longDesc: "Crea y personaliza tu propio espacio en el metaverso. Diseña edificios, organiza eventos y conecta con otros jugadores en un mundo virtual descentralizado.",
+      desc: "Welcome to the World Tour",
+      longDesc: "Taking car culture to the next level! Drag racing is just the start in this series centered around a moving festival where you live out your dream lifestyle with a community of passionate car enthusiast.",
       video: "/video/Nitro_Nation.mp4"
     },
     "6": {
       name: "NFL Rivals",
-      desc: "Corre y esquiva obstáculos en la blockchain",
-      longDesc: "Un emocionante juego de carreras sin fin donde deberás esquivar obstáculos y recolectar tokens. Compite por los mejores puntajes y gana recompensas exclusivas.",
+      desc: "WELCOME TO THE WORLD TOUR",
+      longDesc: "Taking car culture to the next level! Drag racing is just the start in this series centered around a moving festival where you live out your dream lifestyle with a community of passionate car enthusiasts.",
       video: "/video/NFL_Rivals.mp4"
     },
     "7": {
@@ -95,6 +97,9 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
   const router = useRouter();
   const resolvedParams = use(params);
   const gameData = getGameData(resolvedParams.id);
+  const [showQR, setShowQR] = useState<'download' | 'info' | null>(null);
+
+  useInactivityTimer();
 
   if (!gameData) {
     return (
@@ -113,18 +118,19 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
   }
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center bg-gradient-to-b from-[#E6007A] to-[#000000]">
-      {/* Contenido principal con scroll */}
-      <div className="flex w-full max-w-4xl flex-1 flex-col p-4 pt-12">
-        <h1 className="text-4xl font-bold text-white text-center mb-8">{gameData.name}</h1>
+    <div className="flex min-h-screen w-full flex-col items-center bg-gradient-to-b from-[#E6007A] to-[#000000] py-4">
+      <div className="w-full max-w-4xl px-4 flex flex-col gap-4">
+        <div className="text-center pt-8 pb-6">
+          <h1 className="text-5xl font-bold text-white mb-3">{gameData.name}</h1>
+          <p className="text-2xl text-white/80">{gameData.desc}</p>
+        </div>
         
         {/* Reproductor de video */}
-        <div className="w-full aspect-video rounded-3xl overflow-hidden mb-6">
+        <div className="w-full aspect-video rounded-3xl overflow-hidden">
           <video
             className="w-full h-full object-cover"
             autoPlay
             loop
-            muted
             playsInline
           >
             {gameData.video && <source src={gameData.video} type="video/mp4" />}
@@ -132,45 +138,58 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
         </div>
 
         {/* Descripción del juego */}
-        <div className="w-full rounded-3xl bg-white/10 p-6 mb-4">
+        <div className="w-full rounded-3xl bg-white/10 p-6">
           <p className="text-xl text-white leading-relaxed">
             {gameData.longDesc}
           </p>
         </div>
-      </div>
 
-      {/* Botones fijos en la parte inferior */}
-      <div className="w-full border-t border-white/10">
-        <div className="mx-auto max-w-4xl p-4">
-          <div className="flex flex-col gap-3">
-            {/* Contenedor de QRs */}
-            <div className="grid grid-cols-2 gap-3">
-              {/* QR Descarga */}
-              <div className="rounded-2xl bg-white p-3 text-center">
-                <div className="aspect-square w-full bg-black/10 mb-2 rounded-xl flex items-center justify-center text-xl">
-                  QR
-                </div>
-                <p className="text-[#E6007A] text-base font-semibold">Descárgalo ya</p>
-              </div>
-              
-              {/* QR Más información */}
-              <div className="rounded-2xl bg-white p-3 text-center">
-                <div className="aspect-square w-full bg-black/10 mb-2 rounded-xl flex items-center justify-center text-xl">
-                  QR
-                </div>
-                <p className="text-[#E6007A] text-base font-semibold">Más información</p>
-              </div>
-            </div>
+        {/* Botones de acción */}
+        <div className="flex flex-col gap-4 mt-4">
+          <div className="grid grid-cols-2 gap-4">
+            <button
+              onClick={() => setShowQR('download')}
+              className="w-full rounded-3xl bg-white py-8 text-center text-2xl font-semibold text-[#E6007A] transition-all hover:bg-opacity-90 active:scale-95"
+            >
+              Descargar Juego
+            </button>
             
             <button
-              onClick={() => router.push('/play')}
-              className="w-full rounded-2xl border-2 border-white py-4 text-center text-xl font-semibold text-white transition-all hover:bg-white/10 active:scale-95"
+              onClick={() => setShowQR('info')}
+              className="w-full rounded-3xl bg-white py-8 text-center text-2xl font-semibold text-[#E6007A] transition-all hover:bg-opacity-90 active:scale-95"
             >
-              Volver a juegos
+              Más Información
             </button>
           </div>
+          
+          <button
+            onClick={() => router.push('/play')}
+            className="w-full rounded-3xl border-4 border-white py-8 text-center text-2xl font-semibold text-white transition-all hover:bg-white/10 active:scale-95"
+          >
+            Volver a juegos
+          </button>
         </div>
       </div>
+
+      {/* Modal QR */}
+      {showQR && (
+        <div 
+          className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50"
+          onClick={() => setShowQR(null)}
+        >
+          <div 
+            className="bg-white rounded-3xl p-6 w-full max-w-xs"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="aspect-square w-full bg-black/10 mb-4 rounded-2xl flex items-center justify-center text-2xl">
+              QR
+            </div>
+            <p className="text-[#E6007A] text-center text-xl font-semibold">
+              {showQR === 'download' ? 'Escanea para descargar' : 'Escanea para más información'}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 } 
