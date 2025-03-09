@@ -17,58 +17,58 @@ interface Game {
 function getGameData(id: string): Game | null {
   const games: Record<string, Game> = {
     "1": {
-      name: "Pinkness Overdrive",
-      desc: "Race through snowy mountains with a touch of pinkness",
-      longDesc: "Experimenta la adrenalina de las carreras en un mundo virtual construido sobre Polkadot. Compite contra otros jugadores, colecciona autos NFT únicos y gana recompensas en tokens.",
-      video: "/video/Pinkness_Overdrive.mp4"
-    },
-    "2": {
-      name: "Pink Drop",
-      desc: "Batalla épica de NFTs en la blockchain",
-      longDesc: "Forma tu equipo de guerreros NFT y compite en batallas épicas. Entrena a tus guerreros, mejora sus habilidades y domina la arena de combate en el ecosistema Polkadot.",
-      video: "/video/Pink_Drop.mp4"
-    },
-    "3": {
-      name: "Pink Mole",
-      desc: "Colecciona y batalla con monstruos digitales",
-      longDesc: "Explora un vasto mundo digital donde podrás capturar, entrenar y luchar con monstruos únicos. Cada monstruo es un NFT con características especiales y habilidades únicas.",
-      video: "/video/Pink_Mole.mp4"
-    },
-    "4": {
-      name: "Pink Bullet",
-      desc: "Defiende tu nodo en este juego de estrategia",
-      longDesc: "Protege la red Polkadot en este emocionante juego de estrategia. Construye defensas, mejora tu nodo y repele ataques mientras ganas recompensas por mantener la red segura.",
-      video: "/video/Pink_Bullet.mp4"
-    },
-    "5": {
       name: "Nitro Nation",
-      desc: "Welcome to the World Tour",
+      desc: "",
       longDesc: "Taking car culture to the next level! Drag racing is just the start in this series centered around a moving festival where you live out your dream lifestyle with a community of passionate car enthusiast.",
       video: "/video/Nitro_Nation.mp4"
     },
-    "6": {
+    "2": {
       name: "NFL Rivals",
       desc: "WELCOME TO THE WORLD TOUR",
       longDesc: "Taking car culture to the next level! Drag racing is just the start in this series centered around a moving festival where you live out your dream lifestyle with a community of passionate car enthusiasts.",
       video: "/video/NFL_Rivals.mp4"
     },
-    "7": {
+    "3": {
       name: "FIFA Rivals",
       desc: "Cuida y entrena mascotas digitales únicas",
       longDesc: "Adopta mascotas virtuales únicas, cuídalas y entrénalas. Cada mascota es un NFT con su propia personalidad y características genéticas que puedes mejorar.",
       video: "/video/FIFA_Rivals.mp4"
     },
-    "8": {
+    "4": {
       name: "Pudgy Party",
       desc: "Batallas estratégicas en tiempo real",
       longDesc: "Participa en intensas batallas estratégicas en tiempo real. Construye tu base, forma alianzas y conquista territorios en este emocionante juego de estrategia blockchain.",
       video: "/video/Pudgy_Party.mp4"
     },
-    "9": {
+    "5": {
       name: "Blankos",
       desc: "Batallas estratégicas en tiempo real",
       longDesc: "Participa en intensas batallas estratégicas en tiempo real. Construye tu base, forma alianzas y conquista territorios en este emocionante juego de estrategia blockchain.",
       video: "/video/Blankos.mp4"
+    },
+    "6": {
+      name: "Pinkness Overdrive",
+      desc: "Race through snowy mountains with a touch of pinkness",
+      longDesc: "Experimenta la adrenalina de las carreras en un mundo virtual construido sobre Polkadot. Compite contra otros jugadores, colecciona autos NFT únicos y gana recompensas en tokens.",
+      video: "/video/Pinkness_Overdrive.mp4"
+    },
+    "7": {
+      name: "Pink Drop",
+      desc: "Batalla épica de NFTs en la blockchain",
+      longDesc: "Forma tu equipo de guerreros NFT y compite en batallas épicas. Entrena a tus guerreros, mejora sus habilidades y domina la arena de combate en el ecosistema Polkadot.",
+      video: "/video/Pink_Drop.mp4"
+    },
+    "8": {
+      name: "Pink Mole",
+      desc: "Colecciona y batalla con monstruos digitales",
+      longDesc: "Explora un vasto mundo digital donde podrás capturar, entrenar y luchar con monstruos únicos. Cada monstruo es un NFT con características especiales y habilidades únicas.",
+      video: "/video/Pink_Mole.mp4"
+    },
+    "9": {
+      name: "Pink Bullet",
+      desc: "Defiende tu nodo en este juego de estrategia",
+      longDesc: "Protege la red Polkadot en este emocionante juego de estrategia. Construye defensas, mejora tu nodo y repele ataques mientras ganas recompensas por mantener la red segura.",
+      video: "/video/Pink_Bullet.mp4"
     },
     "10": {
       name: "Exiled Racers",
@@ -119,10 +119,10 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
 
   return (
     <div className="flex min-h-screen w-full flex-col items-center bg-gradient-to-b from-[#E6007A] to-[#000000] py-4">
-      <div className="w-full max-w-4xl px-4 flex flex-col gap-4">
-        <div className="text-center pt-8 pb-6">
-          <h1 className="text-5xl font-bold text-white mb-3">{gameData.name}</h1>
-          <p className="text-2xl text-white/80">{gameData.desc}</p>
+      <div className="w-full max-w-4xl px-1 flex flex-col gap-2">
+        <div className="text-center pt-4 pb-2">
+          <h1 className="text-5xl font-bold text-white ">{gameData.name}</h1>
+          {/* <p className="text-2xl text-white/80">{gameData.desc}</p> */}
         </div>
         
         {/* Reproductor de video */}
@@ -145,7 +145,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
         </div>
 
         {/* Botones de acción */}
-        <div className="flex flex-col gap-4 mt-4">
+        <div className="flex flex-col gap-4 mt-2">
           <div className="grid grid-cols-2 gap-4">
             <button
               onClick={() => setShowQR('download')}
