@@ -9,28 +9,28 @@ export default function GameSummaryPage() {
             href="/play"
             className="text-white hover:text-white/80"
           >
-            ← Volver a juegos
+            ← Back to Games
           </Link>
         </nav>
 
         <main className="flex flex-col items-center gap-12">
-          <h1 className="text-3xl font-bold text-white">Resumen del juego</h1>
+          <h1 className="text-3xl font-bold text-white">Game Summary</h1>
           
-          {/* Reproductor de video */}
+          {/* Video Player */}
           <div className="aspect-video w-full max-w-4xl rounded-xl bg-black/20">
             <div className="flex h-full items-center justify-center text-white/50">
-              Reproductor de video
+              Video Player
             </div>
           </div>
 
-          {/* Controles */}
+          {/* Controls */}
           <div className="flex gap-4">
             <button className="rounded-lg bg-white/10 p-4 text-white hover:bg-white/20">
-              <span className="sr-only">Anterior</span>
+              <span className="sr-only">Previous</span>
               ←
             </button>
             <button className="rounded-lg bg-white/10 p-4 text-white hover:bg-white/20">
-              <span className="sr-only">Siguiente</span>
+              <span className="sr-only">Next</span>
               →
             </button>
           </div>

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 // Definimos el tiempo de inactividad como una constante
-const INACTIVITY_TIMEOUT = 60000; // 60 segundos
+const INACTIVITY_TIMEOUT = 600000; // 60 segundos
 
 export const useInactivityTimer = (setFullscreen?: (value: boolean) => void) => {
   const router = useRouter();
