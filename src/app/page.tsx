@@ -8,7 +8,6 @@ export default function HomePage() {
   const [isFullscreen, setIsFullscreen] = useState(true);
   const [isVideoReady, setIsVideoReady] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [isMuted, setIsMuted] = useState(true);
 
   useInactivityTimer(setIsFullscreen);
 
@@ -18,7 +17,6 @@ export default function HomePage() {
       
       const forcePlay = async () => {
         try {
-          setIsVideoReady(true);
           await video.play();
         } catch (error) {
           console.error("Error al reproducir:", error);
@@ -33,31 +31,38 @@ export default function HomePage() {
         }
       };
 
-      const handleCanPlay = () => {
+      const handleLoadedData = () => {
+        setIsVideoReady(true);
         forcePlay();
       };
 
-      video.addEventListener('canplay', handleCanPlay);
+      const handleLoadedMetadata = () => {
+        setIsVideoReady(true);
+      };
+
+      video.addEventListener('loadeddata', handleLoadedData);
+      video.addEventListener('loadedmetadata', handleLoadedMetadata);
+      video.addEventListener('canplay', handleLoadedData);
       
-      if (video.readyState >= 3) {
+      // Si el video ya está cargado cuando se monta el componente
+      if (video.readyState >= 2) {
+        setIsVideoReady(true);
         forcePlay();
       }
 
       return () => {
-        video.removeEventListener('canplay', handleCanPlay);
+        video.removeEventListener('loadeddata', handleLoadedData);
+        video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+        video.removeEventListener('canplay', handleLoadedData);
       };
     }
   }, []);
 
   const handleVideoClick = () => {
-    setIsFullscreen(false);
-  };
-
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(!isMuted);
+    if (videoRef.current?.muted) {
+      videoRef.current.muted = false;
     }
+    setIsFullscreen(false);
   };
 
   return (
@@ -88,35 +93,15 @@ export default function HomePage() {
               muted
               preload="auto"
               src="/video/Polkadot_Gaming.webm"
-              onClick={handleVideoClick}
             />
             {!isVideoReady && (
               <div className="absolute inset-0 flex items-center justify-center bg-black">
-                <div className="text-white text-xl">Cargando video...</div>
+                <div className="flex flex-col items-center gap-4">
+                  <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                  <div className="text-white text-xl">Cargando video...</div>
+                </div>
               </div>
             )}
-            
-            {/* Botón de sonido */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleMute();
-              }}
-              className="absolute top-4 right-4 p-4 rounded-full bg-black/50 hover:bg-black/70 transition-all z-20"
-            >
-              {isMuted ? (
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M11 5L6 9H2v6h4l5 4V5z"/>
-                  <line x1="23" y1="9" x2="17" y2="15"/>
-                  <line x1="17" y1="9" x2="23" y2="15"/>
-                </svg>
-              ) : (
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M11 5L6 9H2v6h4l5 4V5z"/>
-                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
-                </svg>
-              )}
-            </button>
           </div>
         </div>
 

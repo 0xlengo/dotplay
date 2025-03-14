@@ -103,7 +103,6 @@ function GamePageContent({ id }: { id: string }) {
   const [platform, setPlatform] = useState<'ios' | 'android' | null>(null);
   const [isVideoReady, setIsVideoReady] = useState(false);
   const [isVideoError, setIsVideoError] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useInactivityTimer();
@@ -112,18 +111,44 @@ function GamePageContent({ id }: { id: string }) {
     if (videoRef.current && gameData?.video) {
       const video = videoRef.current;
       
+      const forcePlay = async () => {
+        try {
+          await video.play();
+        } catch (error) {
+          console.error("Error al reproducir:", error);
+          setTimeout(async () => {
+            try {
+              await video.play();
+            } catch (e) {
+              console.error("Segundo intento fallido:", e);
+            }
+          }, 1000);
+        }
+      };
+
       const handleLoadedData = () => {
         setIsVideoReady(true);
-        video.play().catch(() => {
-          // Si falla el autoplay, simplemente continuamos mostrando el video
-          setIsVideoReady(true);
-        });
+        forcePlay();
+      };
+
+      const handleLoadedMetadata = () => {
+        setIsVideoReady(true);
       };
 
       video.addEventListener('loadeddata', handleLoadedData);
+      video.addEventListener('loadedmetadata', handleLoadedMetadata);
+      video.addEventListener('canplay', handleLoadedData);
       
+      // Si el video ya está cargado cuando se monta el componente
+      if (video.readyState >= 2) {
+        setIsVideoReady(true);
+        forcePlay();
+      }
+
       return () => {
         video.removeEventListener('loadeddata', handleLoadedData);
+        video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+        video.removeEventListener('canplay', handleLoadedData);
         video.pause();
       };
     }
@@ -133,10 +158,9 @@ function GamePageContent({ id }: { id: string }) {
     setIsVideoError(true);
   };
 
-  const toggleMute = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = !videoRef.current.muted;
-      setIsMuted(!isMuted);
+  const handleVideoClick = () => {
+    if (videoRef.current?.muted) {
+      videoRef.current.muted = false;
     }
   };
 
@@ -259,16 +283,17 @@ function GamePageContent({ id }: { id: string }) {
                   loop
                   playsInline
                   muted
-                  preload="metadata"
+                  preload="auto"
                   src={gameData.video || ''}
                   onError={handleVideoError}
                   crossOrigin="anonymous"
+                  onClick={handleVideoClick}
                 />
                 {!isVideoReady && !isVideoError && (
                   <div className="absolute inset-0 flex items-center justify-center bg-black">
                     <div className="flex flex-col items-center gap-4">
                       <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
-                      <div className="text-white text-xl">Loading video...</div>
+                      <div className="text-white text-xl">Cargando video...</div>
                     </div>
                   </div>
                 )}
@@ -289,27 +314,6 @@ function GamePageContent({ id }: { id: string }) {
                       </button>
                     </div>
                   </div>
-                )}
-                
-                {/* Botón de sonido */}
-                {isVideoReady && !isVideoError && (
-                  <button
-                    onClick={toggleMute}
-                    className="absolute top-4 right-4 p-4 rounded-full bg-black/50 hover:bg-black/70 transition-all z-20"
-                  >
-                    {isMuted ? (
-                      <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M11 5L6 9H2v6h4l5 4V5z"/>
-                        <line x1="23" y1="9" x2="17" y2="15"/>
-                        <line x1="17" y1="9" x2="23" y2="15"/>
-                      </svg>
-                    ) : (
-                      <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M11 5L6 9H2v6h4l5 4V5z"/>
-                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
-                      </svg>
-                    )}
-                  </button>
                 )}
               </>
             )}

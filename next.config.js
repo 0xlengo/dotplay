@@ -1,5 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    turbo: {
+      resolveAlias: {
+        'react-server-dom-webpack/server.edge': 'react-server-dom-webpack/server.node'
+      }
+    }
+  },
+  output: 'standalone',
+  images: {
+    unoptimized: true
+  },
   async headers() {
     return [
       {
