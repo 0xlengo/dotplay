@@ -88,7 +88,7 @@ export default function BuildPage() {
               playsInline
               muted
               preload="auto"
-              src="/video/dotplay.webm"
+              src="/video/Dotplay.webm"
               onError={handleVideoError}
               onClick={handleVideoClick}
             />
