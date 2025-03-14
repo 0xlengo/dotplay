@@ -1,12 +1,10 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import { useInactivityTimer } from "@/hooks/useInactivityTimer";
 import Link from "next/link";
 
 export default function HomePage() {
-  const router = useRouter();
   const [isFullscreen, setIsFullscreen] = useState(true);
   const [isVideoReady, setIsVideoReady] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
