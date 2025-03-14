@@ -87,7 +87,7 @@ export default function HomePage() {
               playsInline
               muted
               preload="auto"
-              src="/video/Polkadot_Gaming.mp4"
+              src="/video/Polkadot_Gaming.webm"
               onClick={handleVideoClick}
             />
             {!isVideoReady && (

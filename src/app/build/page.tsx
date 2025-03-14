@@ -64,7 +64,7 @@ export default function BuildPage() {
               playsInline
               muted
               preload="auto"
-              src="/video/dotplay.mp4"
+              src="/video/dotplay.webm"
               onError={handleVideoError}
             />
             {!isVideoReady && !isVideoError && (

@@ -23,43 +23,43 @@ function getGameData(id: string): Game | null {
       name: "Nitro Nation",
       desc: "",
       longDesc: "Taking car culture to the next level! Drag racing is just the start in this series centered around a moving festival where you live out your dream lifestyle with a community of passionate car enthusiast.",
-      video: "/video/Nitro_Nation.mp4"
+      video: "/video/Nitro_Nation.webm"
     },
     "2": {
       name: "NFL Rivals",
       desc: "",
       longDesc: "Become a GM and take your gameplay to the next level. With limited collections, exclusive designs and superior stats, these cards will give you the edge you need to dominate the competition",
-      video: "/video/NFL_Rivals.mp4"
+      video: "/video/NFL_Rivals.webm"
     },
     "3": {
       name: "FIFA Rivals",
       desc: "Cuida y entrena mascotas digitales únicas",
       longDesc: "In partnership with FIFA, the mobile version of the game set to revolutionize the 2026 Football World Cup in Canada, Mexico, and the United States is arriving this summer. Download FIFA Rivals for free and experience the excitement of global football like never before.",
-      video: "/video/FIFA_Rivals.mp4"
+      video: "/video/FIFA_Rivals.webm"
     },
     "4": {
       name: "Pudgy Party",
       desc: "",
       longDesc: "Get ready for an exciting adventure with Pudgy Party, the new AAA mobile game from Pudgy Penguins and Mythical Games! Launching on iOS and Android in 2025, this game promises a universe of fun and connection. ",
-      video: "/video/Pudgy_Party.mp4"
+      video: "/video/Pudgy_Party.webm"
     },
     "5": {
       name: "Blankos",
       desc: "",
       longDesc: "Blankos, a popular game with a thriving community, has migrated from Ethereum to Polkadot to achieve greater scalability, smoother operation, and lower fees for its users. The game is currently developing its mobile version, which is set for an imminent release. ",
-      video: "/video/Blankos.mp4"
+      video: "/video/Blankos.webm"
     },
     "6": {
       name: "Pinkness Overdrive",
       desc: "Race through snowy mountains with a touch of pinkness",
       longDesc: "Experience the high-speed thrill of PINKness Overdrive, a neon-filled racing game with stunning environments, customizable cars, and exciting solo and multiplayer modes.",
-      video: "/video/Pinkness_Overdrive.mp4"
+      video: "/video/Pinkness_Overdrive.webm"
     },
     "7": {
       name: "Pink Drop",
       desc: "",
       longDesc: "What started as a way to try and bring some $PINKness back to Polkadot has fast become a thriving community full of enthusiasts, dreamers, and builders.",
-      video: "/video/Pink_Drop.mp4"
+      video: "/video/Pink_Drop.webm"
     },
     "8": {
       name: "Pink a Mole",
@@ -77,19 +77,19 @@ function getGameData(id: string): Game | null {
       name: "Exiled Racers",
       desc: "",
       longDesc: "Compete in weekly Ghost Riders leagues, customize your Racecrafts and Pilots, and earn real rewards. Dive into a world of unique factions, evolving track challenges, and thrilling races!",
-      video: "/video/Exiled_Racers.mp4"
+      video: "/video/Exiled_Racers.webm"
     },
     "11": {
       name: "Evrloot",
       desc: "Batallas estratégicas en tiempo real",
       longDesc: "Step into the expansive universe of EVRLOOT, a cutting-edge play-to-earn game that seamlessly blends strategic gameplay with blockchain technology. This game offers an unparalleled experience for players seeking adventure, customization, and real rewards.",
-      video: "/video/Evrloot.mp4"
+      video: "/video/Evrloot.webm"
     },
     "12": {
       name: "Big Ballz of Bayuns",
       desc: "Batallas estratégicas en tiempo real",
       longDesc: "Welcome to Ajuna Network, a decentralized gaming platform that delivers real value to gamers without compromising on gameplay. ",
-      video: "/video/Big_Ballz_of_Bayuns.mp4"
+      video: "/video/Big_Ballz_of_Bayuns.webm"
     }
   };
   
